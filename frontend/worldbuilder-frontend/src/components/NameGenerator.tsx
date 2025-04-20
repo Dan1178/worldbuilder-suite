@@ -9,9 +9,14 @@ function NameGenerator() {
   const handleGenerate = async () => {
     setLoading(true);
     try {
-      const response = await axios.post<string>('http://localhost:8080/api/name/generate', {
-        description,
-      });
+      const response = await axios.post<string>('http://localhost:8080/api/name/generate',
+      description,
+          {
+              headers: {
+                  'Content-Type': 'text/plain',
+              },
+          }
+      );
       const nameList = response.data.split(',').map((name: string) => name.trim());
       setNames(nameList);
     } catch (error) {

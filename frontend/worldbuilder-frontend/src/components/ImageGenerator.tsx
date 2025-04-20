@@ -10,9 +10,14 @@ function ImageGenerator() {
         setLoading(true);
         setImageUrl(null);
         try {
-            const response = await axios.post<string>('http://localhost:8080/api/image/generate', {
-                description,
-            });
+            const response = await axios.post<string>('http://localhost:8080/api/image/generate',
+            description,
+                {
+                    headers: {
+                        'Content-Type': 'text/plain',
+                    },
+                }
+            );
             setImageUrl(response.data);
         } catch (error) {
             console.error('Error generating image:', error);
@@ -42,7 +47,7 @@ function ImageGenerator() {
                 {loading ? 'Generating...' : 'Generate Image'}
             </button>
             {imageUrl && (
-                <div className="mt-4 flex-1 overflow-auto">
+                <div className="mt-4 flex-1 overflow-y-auto max-h-[calc(100vh-300px)]">
                     <h3 className="font-bold">Generated Image:</h3>
                     <img
                         src={imageUrl}

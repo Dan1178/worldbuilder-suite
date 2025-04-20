@@ -24,7 +24,6 @@ public class ImageGeneratorService {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + openAiApiKey);
             headers.set("Content-Type", "application/json");
-            description = "female elven archer";
 
             String body = "{"
                     + "\"model\": \"dall-e-3\","
