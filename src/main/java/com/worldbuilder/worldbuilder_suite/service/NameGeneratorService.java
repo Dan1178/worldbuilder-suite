@@ -26,15 +26,19 @@ public class NameGeneratorService {
                 .accessToken(huggingFaceApiKey)
                 .modelId("mistralai/Mixtral-8x7B-Instruct-v0.1")
                 .build();
-        String template = "Generate 25 unique names for a character described as: {{description}}. " +
-                "Each name should match the characteristics (e.g., race, nationality, vibe). " +
-                "Return names as a comma-separated list.";
-        PromptTemplate promptTemplate = PromptTemplate.from(template);
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("description", description);
-        Prompt prompt = promptTemplate.apply(variables);
-        String result = model.generate(prompt.text());
-        log.info("Returned from model: " + result);
-        return result;
+        try {
+            String template = "Generate 25 unique names for a character described as: {{description}}. " +
+                    "Each name must match the characteristics (e.g., race, nationality, vibe). " +
+                    "Return ONLY the names as a comma-separated list, with no additional text, prefixes, or formatting.";
+            PromptTemplate promptTemplate = PromptTemplate.from(template);
+            Map<String, Object> variables = new HashMap<>();
+            variables.put("description", description);
+            Prompt prompt = promptTemplate.apply(variables);
+            String rawResponse = model.generate(prompt.text());
+            String[] responseLines = rawResponse.split("\n");
+            return responseLines[responseLines.length - 1].trim();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate names: " + e.getMessage(), e);
+        }
     }
 }

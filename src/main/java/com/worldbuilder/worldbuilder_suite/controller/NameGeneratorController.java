@@ -1,13 +1,11 @@
 package com.worldbuilder.worldbuilder_suite.controller;
 
 import com.worldbuilder.worldbuilder_suite.service.NameGeneratorService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/name")
+@CrossOrigin(origins = "http://localhost:5173")
 public class NameGeneratorController {
     private final NameGeneratorService service;
 
