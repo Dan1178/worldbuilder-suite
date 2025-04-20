@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import NameGenerator from './components/NameGenerator';
 import ImageGenerator from './components/ImageGenerator';
+import Loremaster from './components/Loremaster';
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
@@ -44,8 +45,17 @@ function App() {
                         >
                             {isSidebarOpen ? 'Character Prototyper' : 'CP'}
                         </li>
-                        <li className={`text-gray-500 ${isSidebarOpen ? '' : 'text-center'}`}>
-                            {isSidebarOpen ? 'Loremaster (Coming Soon)' : 'L'}
+                        <li
+                            className={`cursor-pointer ${
+                                activeTab === 'loremaster'
+                                    ? 'text-teal-300'
+                                    : isSidebarOpen
+                                    ? 'hover:text-gray-300'
+                                    : ''
+                            } ${isSidebarOpen ? '' : 'text-center'}`}
+                            onClick={() => setActiveTab('loremaster')}
+                        >
+                            {isSidebarOpen ? 'Loremaster' : 'L'}
                         </li>
                         <li className={`text-gray-500 ${isSidebarOpen ? '' : 'text-center'}`}>
                             {isSidebarOpen ? 'Plot Weaver (Coming Soon)' : 'PW'}
@@ -64,6 +74,7 @@ function App() {
                     </button>
                     {activeTab === 'name-generator' && <NameGenerator />}
                     {activeTab === 'image-generator' && <ImageGenerator />}
+                    {activeTab === 'loremaster' && <Loremaster />}
                 </div>
             </div>
         </div>
