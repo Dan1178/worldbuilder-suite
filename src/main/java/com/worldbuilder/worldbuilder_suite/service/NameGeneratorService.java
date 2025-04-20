@@ -3,7 +3,6 @@ package com.worldbuilder.worldbuilder_suite.service;
 import dev.langchain4j.model.huggingface.HuggingFaceChatModel;
 import dev.langchain4j.model.input.Prompt;
 import dev.langchain4j.model.input.PromptTemplate;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,19 +12,21 @@ import java.util.Map;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class NameGeneratorService {
 
-    @Value("${langchain4j.hugging-face.api-key}")
-    private String huggingFaceApiKey;
+    private final String huggingFaceApiKey;
 
     private HuggingFaceChatModel model;
 
-    public String generateNames(String description) {
+    public NameGeneratorService(@Value("${langchain4j.hugging-face.api-key}") String huggingFaceApiKey) {
+        this.huggingFaceApiKey = huggingFaceApiKey;
         this.model = HuggingFaceChatModel.builder()
                 .accessToken(huggingFaceApiKey)
                 .modelId("mistralai/Mixtral-8x7B-Instruct-v0.1")
                 .build();
+    }
+
+    public String generateNames(String description) {
         try {
             String template = "Generate 25 unique names for a character described as: {{description}}. " +
                     "Each name must match the characteristics (e.g., race, nationality, vibe). " +
