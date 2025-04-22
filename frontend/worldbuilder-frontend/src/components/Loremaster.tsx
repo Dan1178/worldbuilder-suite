@@ -35,7 +35,25 @@ function Loremaster() {
         try {
             const response = await axios.post<string>(
                 'http://localhost:8080/api/loremaster/load-documents',
-                "/userTextFiles",
+                {
+                    headers: {
+                        'Content-Type': 'text/plain',
+                    },
+                }
+            );
+            setAnswer(response.data);
+        } catch (error) {
+            console.error('Error loading documents:', error);
+        }
+        setLoading(false);
+    };
+
+    const handleClearDocs = async () => {
+        setLoading(true);
+        setAnswer(null);
+        try {
+            const response = await axios.delete<string>(
+                'http://localhost:8080/api/loremaster/clear-all-documents',
                 {
                     headers: {
                         'Content-Type': 'text/plain',
@@ -136,24 +154,37 @@ function Loremaster() {
                 )}
             </div>
 
-            {/* Question Section */}
+            <div className="mb-4 flex">
+                <button
+                    className={`w-full p-2 rounded font-semibold text-black ${
+                        loading
+                            ? 'bg-teal-300 cursor-not-allowed'
+                            : 'bg-teal-600 hover:bg-teal-700'
+                    }`}
+                    onClick={handleLoadDocs}
+                    disabled={loading}
+                >
+                    {loading ? 'Loading...' : 'Load All Documents'}
+                </button>
+                <button
+                    className={`w-full p-2 rounded font-semibold text-black ${
+                        loading
+                            ? 'bg-teal-300 cursor-not-allowed'
+                            : 'bg-teal-600 hover:bg-teal-700'
+                    }`}
+                    onClick={handleClearDocs}
+                    disabled={loading}
+                >
+                    {loading ? 'Deleting...' : 'Clear All Documents'}
+                </button>
+            </div>
+
             <input
                 className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
                 placeholder="Ask about your world (e.g., What’s the history of the Elven Kingdom?)"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
             />
-            <button
-                className={`w-full p-2 rounded font-semibold text-black ${
-                    loading
-                        ? 'bg-teal-300 cursor-not-allowed'
-                        : 'bg-teal-600 hover:bg-teal-700'
-                }`}
-                onClick={handleLoadDocs}
-                disabled={loading}
-            >
-                {loading ? 'Loading...' : 'Load Documents'}
-            </button>
             <button
                 className={`w-full p-2 rounded font-semibold text-black ${
                     loading

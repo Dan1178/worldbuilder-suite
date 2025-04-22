@@ -35,3 +35,6 @@ build/
 
 ### Private Keys ###
 **/src/main/resources/private.properties
+
+### User Generated Text Files ###
+/userTextFiles

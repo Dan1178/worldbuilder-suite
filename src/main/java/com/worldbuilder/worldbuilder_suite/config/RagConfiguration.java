@@ -1,9 +1,10 @@
 package com.worldbuilder.worldbuilder_suite.config;
 
-import com.worldbuilder.worldbuilder_suite.service.*;
-import dev.langchain4j.model.embedding.EmbeddingModel;
-import dev.langchain4j.model.openai.OpenAiEmbeddingModel;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.worldbuilder.worldbuilder_suite.service.DocumentLoader;
+import com.worldbuilder.worldbuilder_suite.service.EmbeddingService;
+import com.worldbuilder.worldbuilder_suite.service.LanguageModelService;
+import com.worldbuilder.worldbuilder_suite.service.RagChain;
+import com.worldbuilder.worldbuilder_suite.service.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
