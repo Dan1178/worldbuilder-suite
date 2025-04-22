@@ -8,6 +8,7 @@ public class LanguageModelService {
 
     public LanguageModelService(String openAiApiKey) {
         this.chatLanguageModel = OpenAiChatModel.builder()
+                .modelName("gpt-4.1-nano-2025-04-14")
                 .apiKey(openAiApiKey)
                 .build();
     }
@@ -15,4 +16,5 @@ public class LanguageModelService {
     public ChatLanguageModel getChatLanguageModel() {
         return chatLanguageModel;
     }
+
 }
